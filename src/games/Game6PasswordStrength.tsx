@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ShieldCheck, ShieldAlert, Check, X, Eye, EyeOff } from 'lucide-react';
 import { useShortcut } from '../hooks/useShortcut';
 import { playSound } from '../services/soundService';
+import confetti from 'canvas-confetti';
 
 interface Game6PasswordStrengthProps {
   config: {
@@ -33,7 +34,13 @@ export function Game6PasswordStrength({ config, onComplete }: Game6PasswordStren
   const handleCheck = () => {
     if (allPassed) {
       setIsFinished(true);
-      playSound('success');
+      playSound('complete');
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#20126E', '#FFC800', '#19E196']
+      });
       setTimeout(onComplete, 1500);
     } else {
       playSound('fail');

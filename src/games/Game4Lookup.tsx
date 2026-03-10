@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Search, CircleCheck as CheckCircle2, Circle as XCircle } from 'lucide-react';
 import { useShortcut } from '../hooks/useShortcut';
 import { playSound } from '../services/soundService';
+import confetti from 'canvas-confetti';
 
 interface Game4LookupProps {
   config: {
@@ -48,7 +49,13 @@ export function Game4Lookup({ config, onComplete }: Game4LookupProps) {
 
     if (finalAllCorrect) {
       setIsFinished(true);
-      playSound('success');
+      playSound('complete');
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#20126E', '#FFC800', '#19E196']
+      });
       setTimeout(onComplete, 1500);
     } else {
       playSound('fail');

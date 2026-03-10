@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'motion/react';
 import { useShortcut } from '../hooks/useShortcut';
 import { playSound } from '../services/soundService';
+import confetti from 'canvas-confetti';
 
 interface Game1PatternProps {
   config: {
@@ -81,6 +82,12 @@ export function Game1Pattern({ config, onComplete }: Game1PatternProps) {
 
     if (nextInput.length === pattern.length) {
       playSound('success');
+      confetti({
+        particleCount: 50,
+        spread: 60,
+        origin: { y: 0.6 },
+        colors: ['#20126E', '#FFC800', '#19E196']
+      });
       if (round < 4) {
         setGameState('success');
         setTimeout(() => {
@@ -90,6 +97,7 @@ export function Game1Pattern({ config, onComplete }: Game1PatternProps) {
         }, 1500);
       } else {
         setGameState('success');
+        playSound('complete');
         setTimeout(onComplete, 1500);
       }
     }
@@ -104,26 +112,26 @@ export function Game1Pattern({ config, onComplete }: Game1PatternProps) {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="mb-4 text-center">
-        <div className="inline-block px-3 py-1 bg-blue-100 text-[#20126E] rounded-full text-xs font-bold mb-1 uppercase tracking-wider">
+    <div className="flex flex-col items-center max-h-[70vh] justify-center">
+      <div className="mb-3 text-center">
+        <div className="inline-block px-2.5 py-1 bg-blue-100 text-[#20126E] rounded-full text-[10px] font-bold mb-1 uppercase tracking-wider">
           Patroon {round} van 4
         </div>
-        <p className="text-gray-600 mb-1 text-sm">
+        <p className="text-gray-600 mb-1 text-xs leading-tight">
           {gameState === 'idle' && 'Klik op start om het patroon te zien.'}
           {gameState === 'showing' && 'Kijk goed naar het patroon...'}
           {gameState === 'playing' && `Klik de cellen in de juiste volgorde (${userInput.length}/${pattern.length})`}
           {gameState === 'success' && (round < 4 ? 'Goed! Op naar het volgende patroon...' : 'Geweldig! Alle patronen geverifieerd.')}
           {gameState === 'fail' && 'Fout patroon! Probeer het opnieuw.'}
         </p>
-        <div className="text-xs font-bold text-gray-400">Poging: {attempts}/{config.maxAttempts}</div>
+        <div className="text-[10px] font-bold text-gray-400">Poging: {attempts}/{config.maxAttempts}</div>
       </div>
 
-      <div 
-        className="grid gap-1.5 bg-gray-100 p-3 rounded-2xl shadow-inner touch-none select-none"
-        style={{ 
+      <div
+        className="grid gap-1.5 bg-gray-100 p-2.5 rounded-2xl shadow-inner touch-none select-none"
+        style={{
           gridTemplateColumns: `repeat(${currentRoundConfig.size}, minmax(0, 1fr))`,
-          width: 'min(100%, 320px)',
+          width: 'min(100%, 280px)',
           aspectRatio: '1/1'
         }}
       >
@@ -133,8 +141,8 @@ export function Game1Pattern({ config, onComplete }: Game1PatternProps) {
             whileTap={{ scale: 0.9 }}
             onClick={() => handleCellClick(i)}
             className={`rounded-md transition-all ${
-              highlightedCell === i 
-                ? 'bg-[#FFC800] shadow-[0_0_15px_#FFC800]' 
+              highlightedCell === i
+                ? 'bg-[#FFC800] shadow-[0_0_15px_#FFC800]'
                 : userInput.includes(i) && pattern[userInput.indexOf(i)] === i
                   ? 'bg-[#19E196]'
                   : 'bg-white hover:bg-gray-50'
@@ -144,19 +152,21 @@ export function Game1Pattern({ config, onComplete }: Game1PatternProps) {
         ))}
       </div>
 
-      <div className="mt-8 flex gap-4">
+      <div className="mt-5 flex gap-3">
         {gameState === 'idle' && (
-          <button 
+          <button
             onClick={generatePattern}
-            className="bg-[#20126E] text-white px-8 py-3 rounded-xl font-bold shadow-lg hover:bg-[#1a0f5a] transition-all"
+            onMouseEnter={() => playSound('hover', 0.2)}
+            className="bg-[#20126E] text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-lg hover:bg-[#1a0f5a] transition-all"
           >
             Start Patroon
           </button>
         )}
         {(gameState === 'fail' || gameState === 'playing') && (
-          <button 
+          <button
             onClick={resetGame}
-            className="bg-gray-200 text-gray-700 px-8 py-3 rounded-xl font-bold hover:bg-gray-300 transition-all"
+            onMouseEnter={() => playSound('hover', 0.2)}
+            className="bg-gray-200 text-gray-700 px-6 py-2.5 rounded-xl font-bold text-sm hover:bg-gray-300 transition-all"
           >
             Opnieuw
           </button>
@@ -164,7 +174,7 @@ export function Game1Pattern({ config, onComplete }: Game1PatternProps) {
       </div>
 
       {attempts >= 2 && gameState === 'playing' && (
-        <p className="mt-4 text-xs text-blue-500 italic">Hint: Kijk goed naar de eerste 3 klikken.</p>
+        <p className="mt-3 text-[10px] text-blue-500 italic">Hint: Kijk goed naar de eerste 3 klikken.</p>
       )}
     </div>
   );

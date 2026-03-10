@@ -157,6 +157,13 @@ export function Game5WordSearch({ config, onComplete }: Game5WordSearchProps) {
 
       if (newFound.length === config.words.length) {
         setIsFinished(true);
+        playSound('complete');
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#20126E', '#FFC800', '#19E196']
+        });
         setTimeout(onComplete, 1500);
       }
     }

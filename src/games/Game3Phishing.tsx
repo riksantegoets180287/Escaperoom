@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ShieldAlert, ShieldCheck, Mail, User, AlertCircle } from 'lucide-react';
 import { useShortcut } from '../hooks/useShortcut';
 import { playSound } from '../services/soundService';
+import confetti from 'canvas-confetti';
 
 interface Game3PhishingProps {
   config: {
@@ -47,6 +48,15 @@ export function Game3Phishing({ config, onComplete }: Game3PhishingProps) {
 
   if (showResult) {
     const passed = score >= config.minCorrect;
+    if (passed) {
+      playSound('complete');
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#20126E', '#FFC800', '#19E196']
+      });
+    }
     return (
       <div className="text-center py-8">
         <div className={`w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 ${passed ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
@@ -54,21 +64,23 @@ export function Game3Phishing({ config, onComplete }: Game3PhishingProps) {
         </div>
         <h3 className="text-2xl font-bold mb-2">{passed ? 'Goed gedaan!' : 'Helaas...'}</h3>
         <p className="text-gray-600 mb-8">Je hebt {score} van de {config.emails.length} emails correct beoordeeld.</p>
-        
+
         {passed ? (
-          <button 
+          <button
             onClick={onComplete}
+            onMouseEnter={() => playSound('hover', 0.2)}
             className="bg-[#20126E] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#1a0f5a] transition-all"
           >
             Ga Verder
           </button>
         ) : (
-          <button 
+          <button
             onClick={() => {
               setCurrentIndex(0);
               setScore(0);
               setShowResult(false);
             }}
+            onMouseEnter={() => playSound('hover', 0.2)}
             className="bg-[#20126E] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#1a0f5a] transition-all"
           >
             Probeer Opnieuw

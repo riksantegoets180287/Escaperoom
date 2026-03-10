@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useShortcut } from '../hooks/useShortcut';
 import { playSound } from '../services/soundService';
+import confetti from 'canvas-confetti';
 
 interface Game2TypingProps {
   config: {
@@ -42,7 +43,13 @@ export function Game2Typing({ config, onComplete }: Game2TypingProps) {
   const handleSubmit = () => {
     if (accuracy >= config.passPercent) {
       setIsFinished(true);
-      playSound('success');
+      playSound('complete');
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#20126E', '#FFC800', '#19E196']
+      });
       setTimeout(onComplete, 1500);
     } else {
       setError(`Nauwkeurigheid te laag (${accuracy}%). Je hebt minimaal ${config.passPercent}% nodig.`);
