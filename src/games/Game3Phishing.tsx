@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ShieldAlert, ShieldCheck, Mail, User, AlertCircle } from 'lucide-react';
+import { ShieldAlert, ShieldCheck, Mail, User, CircleAlert as AlertCircle } from 'lucide-react';
 import { useShortcut } from '../hooks/useShortcut';
 import { playSound } from '../services/soundService';
 import confetti from 'canvas-confetti';
