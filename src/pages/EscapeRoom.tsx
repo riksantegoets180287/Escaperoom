@@ -131,9 +131,9 @@ export function EscapeRoom({ user, progress, config, onGameComplete, onReset, on
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* Left Column: Games 1-3 */}
-          <div className="lg:col-span-3 space-y-4 order-2 lg:order-1">
+          <div className="lg:col-span-3 space-y-3 order-2 lg:order-1">
             {games.slice(0, 3).map((game) => (
-              <GameCard 
+              <GameCard
                 key={game.id}
                 game={game}
                 isCompleted={!!progress.completedGames[game.id]}
@@ -200,9 +200,9 @@ export function EscapeRoom({ user, progress, config, onGameComplete, onReset, on
           </div>
 
           {/* Right Column: Games 4-6 */}
-          <div className="lg:col-span-3 space-y-4 order-3">
+          <div className="lg:col-span-3 space-y-3 order-3">
             {games.slice(3, 6).map((game) => (
-              <GameCard 
+              <GameCard
                 key={game.id}
                 game={game}
                 isCompleted={!!progress.completedGames[game.id]}

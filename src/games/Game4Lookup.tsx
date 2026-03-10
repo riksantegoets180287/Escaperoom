@@ -77,10 +77,12 @@ export function Game4Lookup({ config, onComplete }: Game4LookupProps) {
                 onChange={(e) => {
                   setAnswers(prev => ({ ...prev, [q.id]: e.target.value }));
                   setResults(prev => ({ ...prev, [q.id]: null }));
+                  playSound('typing', 0.2);
                 }}
+                onFocus={() => playSound('click', 0.3)}
                 className={`w-full px-4 py-3 rounded-xl border outline-none transition-all ${
-                  results[q.id] === true ? 'border-green-500 bg-green-50' : 
-                  results[q.id] === false ? 'border-red-500 bg-red-50' : 
+                  results[q.id] === true ? 'border-green-500 bg-green-50' :
+                  results[q.id] === false ? 'border-red-500 bg-red-50' :
                   'border-gray-200 focus:ring-2 focus:ring-[#20126E]'
                 }`}
                 placeholder="Jouw antwoord..."
@@ -97,10 +99,11 @@ export function Game4Lookup({ config, onComplete }: Game4LookupProps) {
 
       <button
         onClick={handleCheck}
+        onMouseEnter={() => playSound('hover', 0.2)}
         disabled={isFinished}
         className={`w-full mt-10 py-4 rounded-xl font-bold text-lg transition-all shadow-lg ${
-          isFinished 
-            ? 'bg-green-500 text-white' 
+          isFinished
+            ? 'bg-green-500 text-white'
             : 'bg-[#20126E] text-white hover:bg-[#1a0f5a]'
         }`}
       >

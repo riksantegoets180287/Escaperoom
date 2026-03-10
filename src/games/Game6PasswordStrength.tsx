@@ -145,10 +145,11 @@ export function Game6PasswordStrength({ config, onComplete }: Game6PasswordStren
 
         <button
           onClick={handleCheck}
+          onMouseEnter={() => playSound('hover', 0.2)}
           disabled={!allPassed || isFinished}
           className={`w-full py-4 rounded-xl font-bold text-lg transition-all shadow-lg ${
-            isFinished 
-              ? 'bg-green-500 text-white' 
+            isFinished
+              ? 'bg-green-500 text-white'
               : 'bg-[#20126E] text-white hover:bg-[#1a0f5a] disabled:opacity-50 disabled:cursor-not-allowed'
           }`}
         >

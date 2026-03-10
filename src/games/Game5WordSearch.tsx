@@ -173,8 +173,12 @@ export function Game5WordSearch({ config, onComplete }: Game5WordSearchProps) {
           <div className="text-sm font-bold text-[#20126E]">
             Selectie: <span className="font-mono bg-gray-100 px-2 py-1 rounded">{currentSelection.map(s => grid[s.r][s.c]).join('') || '...'}</span>
           </div>
-          <button 
-            onClick={clearSelection}
+          <button
+            onClick={() => {
+              clearSelection();
+              playSound('click', 0.3);
+            }}
+            onMouseEnter={() => playSound('hover', 0.2)}
             className="text-xs font-bold text-gray-400 hover:text-[#20126E] flex items-center gap-1"
           >
             <RefreshCw className="w-3 h-3" /> Wis selectie

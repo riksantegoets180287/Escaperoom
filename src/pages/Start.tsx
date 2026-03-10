@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Cpu } from 'lucide-react';
+import { playSound } from '../services/soundService';
 
 interface StartProps {
   onStart: (name: string, className: string) => void;
@@ -19,9 +20,11 @@ export function Start({ onStart }: StartProps) {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
+      playSound('fail', 0.3);
       return;
     }
 
+    playSound('success');
     onStart(name, className);
   };
 
@@ -46,7 +49,11 @@ export function Start({ onStart }: StartProps) {
             <input
               type="text"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {
+                setName(e.target.value);
+                playSound('input', 0.2);
+              }}
+              onFocus={() => playSound('click', 0.3)}
               className={`w-full px-4 py-3 rounded-xl border ${errors.name ? 'border-red-500' : 'border-gray-200'} focus:ring-2 focus:ring-[#20126E] outline-none transition-all`}
               placeholder="Je volledige naam"
             />
@@ -58,7 +65,11 @@ export function Start({ onStart }: StartProps) {
             <input
               type="text"
               value={className}
-              onChange={(e) => setClassName(e.target.value)}
+              onChange={(e) => {
+                setClassName(e.target.value);
+                playSound('input', 0.2);
+              }}
+              onFocus={() => playSound('click', 0.3)}
               className={`w-full px-4 py-3 rounded-xl border ${errors.className ? 'border-red-500' : 'border-gray-200'} focus:ring-2 focus:ring-[#20126E] outline-none transition-all`}
               placeholder="Bijv. ICT-1A"
             />
@@ -67,6 +78,7 @@ export function Start({ onStart }: StartProps) {
 
           <button
             type="submit"
+            onMouseEnter={() => playSound('hover', 0.2)}
             className="w-full bg-[#20126E] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#1a0f5a] transition-colors shadow-lg active:scale-[0.98]"
           >
             Start missie
