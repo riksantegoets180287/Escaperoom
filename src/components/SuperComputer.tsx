@@ -11,27 +11,27 @@ export function SuperComputer({ isFinished, completedCount }: SuperComputerProps
   const virusOpacity = Math.max(0, 1 - completedCount / 6);
 
   return (
-    <div className="relative bg-white p-8 rounded-[22px] shadow-xl border border-black/5 overflow-hidden min-h-[300px] flex flex-col items-center justify-center">
+    <div className="relative bg-white p-5 rounded-[22px] shadow-xl border border-black/5 overflow-hidden min-h-[220px] flex flex-col items-center justify-center">
       {/* Background Grid */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#20126E 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
 
-      <motion.div 
-        animate={{ 
+      <motion.div
+        animate={{
           scale: isFinished ? [1, 1.05, 1] : 1,
           boxShadow: isFinished ? '0 0 40px rgba(25, 225, 150, 0.4)' : '0 0 0px rgba(0,0,0,0)'
         }}
         transition={{ duration: 2, repeat: isFinished ? Infinity : 0 }}
-        className={`relative z-10 w-48 h-48 rounded-3xl flex items-center justify-center transition-colors duration-1000 ${isFinished ? 'bg-[#19E196]' : 'bg-[#20126E]'}`}
+        className={`relative z-10 w-36 h-36 rounded-3xl flex items-center justify-center transition-colors duration-1000 ${isFinished ? 'bg-[#19E196]' : 'bg-[#20126E]'}`}
       >
         <div className="absolute inset-2 border-2 border-white/20 rounded-2xl" />
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 w-12 h-1 bg-white/20 rounded-full" />
-        
+        <div className="absolute top-3 left-1/2 -translate-x-1/2 w-10 h-1 bg-white/20 rounded-full" />
+
         {isFinished ? (
-          <ShieldCheck className="w-24 h-24 text-white" />
+          <ShieldCheck className="w-20 h-20 text-white" />
         ) : (
           <div className="relative">
-            <div className="w-20 h-20 border-4 border-white/30 rounded-full animate-pulse flex items-center justify-center">
-              <div className="w-12 h-12 bg-white/10 rounded-full" />
+            <div className="w-16 h-16 border-4 border-white/30 rounded-full animate-pulse flex items-center justify-center">
+              <div className="w-10 h-10 bg-white/10 rounded-full" />
             </div>
             {/* Pulsing bug overlay */}
             <motion.div
@@ -39,17 +39,17 @@ export function SuperComputer({ isFinished, completedCount }: SuperComputerProps
               transition={{ duration: 1.5, repeat: Infinity }}
               className="absolute inset-0 flex items-center justify-center"
             >
-              <Bug className="w-16 h-16 text-[#DC1E50]" />
+              <Bug className="w-14 h-14 text-[#DC1E50]" />
             </motion.div>
           </div>
         )}
       </motion.div>
 
-      <div className="mt-8 text-center z-10">
-        <h3 className="text-2xl font-bold font-serif mb-2">Supercomputer Core</h3>
+      <div className="mt-5 text-center z-10">
+        <h3 className="text-xl font-bold font-serif mb-1.5">Supercomputer Core</h3>
         <div className="flex items-center justify-center gap-2">
-          <div className={`w-3 h-3 rounded-full animate-pulse ${isFinished ? 'bg-[#19E196]' : 'bg-[#DC1E50]'}`} />
-          <span className={`text-sm font-bold uppercase tracking-widest ${isFinished ? 'text-[#19E196]' : 'text-[#DC1E50]'}`}>
+          <div className={`w-2.5 h-2.5 rounded-full animate-pulse ${isFinished ? 'bg-[#19E196]' : 'bg-[#DC1E50]'}`} />
+          <span className={`text-xs font-bold uppercase tracking-widest ${isFinished ? 'text-[#19E196]' : 'text-[#DC1E50]'}`}>
             {isFinished ? 'Systeem Veilig' : 'Virus Gedetecteerd'}
           </span>
         </div>
