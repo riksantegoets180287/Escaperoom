@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, CheckCircle2, XCircle } from 'lucide-react';
+import { Search, CircleCheck as CheckCircle2, Circle as XCircle } from 'lucide-react';
 import { useShortcut } from '../hooks/useShortcut';
 import { playSound } from '../services/soundService';
 

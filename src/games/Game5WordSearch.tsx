@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { RefreshCw, CheckCircle2 } from 'lucide-react';
+import { RefreshCw, CircleCheck as CheckCircle2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useShortcut } from '../hooks/useShortcut';
 import { playSound } from '../services/soundService';

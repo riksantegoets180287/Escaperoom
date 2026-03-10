@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { CheckCircle2, Circle, ArrowRight, Grid3x3, Keyboard, Mail, Search, KeyRound } from 'lucide-react';
+import { CircleCheck as CheckCircle2, Circle, ArrowRight, Grid3x3, Keyboard, Mail, Search, KeyRound } from 'lucide-react';
 import { playSound } from '../services/soundService';
 
 interface GameCardProps {
