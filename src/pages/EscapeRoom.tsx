@@ -75,10 +75,10 @@ export function EscapeRoom({ user, progress, config, onGameComplete, onReset, on
   };
 
   const games = [
-    { id: 1, title: 'Snel Typen', desc: 'Typ de beveiligingscode foutloos over.', icon: 'Keyboard' },
+    { id: 1, title: 'Informatie Zoeken', desc: 'Vind de antwoorden op de beveiligingsvragen.', icon: 'Search' },
     { id: 2, title: 'Patroon Herkennen', desc: 'Onthoud en herhaal het patroon op de supercomputer.', icon: 'Grid3x3' },
     { id: 3, title: 'Phishing Filter', desc: 'Herken de valse emails in de inbox.', icon: 'Mail' },
-    { id: 4, title: 'Informatie Zoeken', desc: 'Vind de antwoorden op de beveiligingsvragen.', icon: 'Search' },
+    { id: 4, title: 'Foutloos Typen', desc: 'Typ de beveiligingscode foutloos over.', icon: 'Keyboard' },
     { id: 5, title: 'Woordzoeker', desc: 'Zoek alle IT-termen in het raster.', icon: 'Grid3x3' },
     { id: 6, title: 'Wachtwoord Sterkte', desc: 'Maak een onkraakbaar wachtwoord.', icon: 'KeyRound' },
   ];
@@ -228,10 +228,10 @@ export function EscapeRoom({ user, progress, config, onGameComplete, onReset, on
             title={games.find(g => g.id === activeGame)?.title || ''}
             noScroll={activeGame === 2}
           >
-            {activeGame === 1 && <Game2Typing config={config.game2} onComplete={() => { handleGameComplete(1); setActiveGame(null); }} />}
+            {activeGame === 1 && <Game4Lookup config={config.game4} onComplete={() => { handleGameComplete(1); setActiveGame(null); }} />}
             {activeGame === 2 && <Game1Pattern config={config.game1} onComplete={() => { handleGameComplete(2); setActiveGame(null); }} />}
             {activeGame === 3 && <Game3Phishing config={config.game3} onComplete={() => { handleGameComplete(3); setActiveGame(null); }} />}
-            {activeGame === 4 && <Game4Lookup config={config.game4} onComplete={() => { handleGameComplete(4); setActiveGame(null); }} />}
+            {activeGame === 4 && <Game2Typing config={config.game2} onComplete={() => { handleGameComplete(4); setActiveGame(null); }} />}
             {activeGame === 5 && <Game5WordSearch config={config.game5} onComplete={() => { handleGameComplete(5); setActiveGame(null); }} />}
             {activeGame === 6 && <Game6PasswordStrength config={config.game6} onComplete={() => { handleGameComplete(6); setActiveGame(null); }} />}
           </Modal>
