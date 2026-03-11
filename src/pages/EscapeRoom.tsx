@@ -146,7 +146,12 @@ export function EscapeRoom({ user, progress, config, onGameComplete, onReset, on
           {/* Center Column: SuperComputer & Meter */}
           <div className="lg:col-span-6 space-y-8 order-1 lg:order-2">
             <SuperComputer isFinished={showEndScreen} completedCount={completedCount} />
-            <VirusMeter completedCount={completedCount} codePieces={puzzlePieces} completedGames={progress.completedGames} />
+            <VirusMeter
+              completedCount={completedCount}
+              codePieces={puzzlePieces}
+              completedGames={progress.completedGames}
+              gameIcons={games.map(g => g.icon)}
+            />
             
             {allGamesDone && !showEndScreen && (
               <motion.div 
