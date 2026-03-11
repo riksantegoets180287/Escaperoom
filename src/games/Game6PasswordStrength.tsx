@@ -34,7 +34,7 @@ export function Game6PasswordStrength({ config, onComplete }: Game6PasswordStren
   const handleCheck = () => {
     if (allPassed) {
       setIsFinished(true);
-      playSound('complete');
+      playSound('gameComplete');
       confetti({
         particleCount: 100,
         spread: 70,

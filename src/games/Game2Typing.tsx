@@ -43,7 +43,7 @@ export function Game2Typing({ config, onComplete }: Game2TypingProps) {
   const handleSubmit = () => {
     if (accuracy >= config.passPercent) {
       setIsFinished(true);
-      playSound('complete');
+      playSound('gameComplete');
       confetti({
         particleCount: 100,
         spread: 70,

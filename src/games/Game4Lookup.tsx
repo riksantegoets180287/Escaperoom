@@ -49,7 +49,7 @@ export function Game4Lookup({ config, onComplete }: Game4LookupProps) {
 
     if (finalAllCorrect) {
       setIsFinished(true);
-      playSound('complete');
+      playSound('gameComplete');
       confetti({
         particleCount: 100,
         spread: 70,

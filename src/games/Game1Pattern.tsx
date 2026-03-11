@@ -81,7 +81,7 @@ export function Game1Pattern({ config, onComplete }: Game1PatternProps) {
     playSound('click');
 
     if (nextInput.length === pattern.length) {
-      playSound('success');
+      playSound('gameComplete');
       confetti({
         particleCount: 50,
         spread: 60,

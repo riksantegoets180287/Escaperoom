@@ -157,7 +157,7 @@ export function Game5WordSearch({ config, onComplete }: Game5WordSearchProps) {
 
       if (newFound.length === config.words.length) {
         setIsFinished(true);
-        playSound('complete');
+        playSound('gameComplete');
         confetti({
           particleCount: 100,
           spread: 70,

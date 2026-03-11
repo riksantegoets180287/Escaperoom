@@ -3,6 +3,7 @@ const sounds = {
   success: 'https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3',
   fail: 'https://assets.mixkit.co/active_storage/sfx/2572/2572-preview.mp3',
   complete: 'https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3',
+  gameComplete: 'https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3', // Euforisch geluidje voor afgeronde games
   typing: 'https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3',
   hover: 'https://assets.mixkit.co/active_storage/sfx/2570/2570-preview.mp3',
   cardOpen: 'https://assets.mixkit.co/active_storage/sfx/2573/2573-preview.mp3',

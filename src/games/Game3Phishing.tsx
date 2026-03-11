@@ -49,7 +49,7 @@ export function Game3Phishing({ config, onComplete }: Game3PhishingProps) {
   if (showResult) {
     const passed = score >= config.minCorrect;
     if (passed) {
-      playSound('complete');
+      playSound('gameComplete');
       confetti({
         particleCount: 100,
         spread: 70,
