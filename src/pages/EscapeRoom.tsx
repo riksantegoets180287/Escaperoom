@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { LogOut, RefreshCw, Trophy, Download } from 'lucide-react';
+import { LogOut, RefreshCw, Trophy, Download, HelpCircle } from 'lucide-react';
 import { Progress, AdminConfig } from '../types';
 import { SuperComputer } from '../components/SuperComputer';
 import { VirusMeter } from '../components/VirusMeter';
@@ -21,19 +21,22 @@ interface EscapeRoomProps {
   progress: Progress;
   config: AdminConfig;
   onGameComplete: (gameId: number) => void;
+  onGameSkip: (gameId: number) => void;
   onReset: () => void;
   onLogout: () => void;
 }
 
-export function EscapeRoom({ user, progress, config, onGameComplete, onReset, onLogout }: EscapeRoomProps) {
+export function EscapeRoom({ user, progress, config, onGameComplete, onGameSkip, onReset, onLogout }: EscapeRoomProps) {
   const [activeGame, setActiveGame] = useState<number | null>(null);
   const [showEndScreen, setShowEndScreen] = useState(false);
   const [rewardPiece, setRewardPiece] = useState<{ id: number; piece: string } | null>(null);
   const [finalPassword, setFinalPassword] = useState('');
   const [finalError, setFinalError] = useState(false);
+  const [skipConfirmGame, setSkipConfirmGame] = useState<number | null>(null);
 
   const completedCount = Object.values(progress.completedGames).filter(Boolean).length;
-  const allGamesDone = completedCount === 6;
+  const skippedCount = Object.values(progress.skippedGames || {}).filter(Boolean).length;
+  const allGamesDone = completedCount + skippedCount === 6;
 
   const puzzlePieces: Record<number, string> = {
     1: 'E',
@@ -105,7 +108,7 @@ export function EscapeRoom({ user, progress, config, onGameComplete, onReset, on
           <div className="flex items-center gap-6">
             <div className="hidden md:flex flex-col items-end">
               <span className="text-xs font-bold uppercase tracking-wider text-gray-400">Voortgang</span>
-              <span className="text-lg font-bold">Kaartjes: {completedCount}/6</span>
+              <span className="text-lg font-bold">Kaartjes: {completedCount + skippedCount}/6</span>
             </div>
             <div className="flex gap-2">
               <button 
@@ -137,8 +140,10 @@ export function EscapeRoom({ user, progress, config, onGameComplete, onReset, on
                 key={game.id}
                 game={game}
                 isCompleted={!!progress.completedGames[game.id]}
+                isSkipped={!!progress.skippedGames?.[game.id]}
                 codePiece={puzzlePieces[game.id]}
                 onOpen={() => setActiveGame(game.id)}
+                onSkipClick={() => setSkipConfirmGame(game.id)}
               />
             ))}
           </div>
@@ -150,6 +155,7 @@ export function EscapeRoom({ user, progress, config, onGameComplete, onReset, on
               completedCount={completedCount}
               codePieces={puzzlePieces}
               completedGames={progress.completedGames}
+              skippedGames={progress.skippedGames || {}}
               gameIcons={games.map(g => g.icon)}
             />
             
@@ -211,8 +217,10 @@ export function EscapeRoom({ user, progress, config, onGameComplete, onReset, on
                 key={game.id}
                 game={game}
                 isCompleted={!!progress.completedGames[game.id]}
+                isSkipped={!!progress.skippedGames?.[game.id]}
                 codePiece={puzzlePieces[game.id]}
                 onOpen={() => setActiveGame(game.id)}
+                onSkipClick={() => setSkipConfirmGame(game.id)}
               />
             ))}
           </div>
@@ -253,12 +261,53 @@ export function EscapeRoom({ user, progress, config, onGameComplete, onReset, on
               <div className="text-6xl font-bold text-[#20126E] bg-gray-50 w-24 h-24 flex items-center justify-center mx-auto rounded-2xl border-2 border-dashed border-[#20126E]">
                 {rewardPiece.piece}
               </div>
-              <button 
+              <button
                 onClick={() => setRewardPiece(null)}
                 className="mt-10 bg-[#20126E] text-white px-10 py-4 rounded-xl font-bold hover:bg-[#1a0f5a] transition-all"
               >
                 Verder naar de volgende opdracht
               </button>
+            </div>
+          </Modal>
+        )}
+      </AnimatePresence>
+
+      {/* Skip Confirmation Modal */}
+      <AnimatePresence>
+        {skipConfirmGame && (
+          <Modal onClose={() => setSkipConfirmGame(null)} title="Spel overslaan?">
+            <div className="text-center py-8">
+              <div className="w-24 h-24 bg-[#FFC800]/20 text-[#FFC800] rounded-full flex items-center justify-center mx-auto mb-6">
+                <HelpCircle className="w-12 h-12" />
+              </div>
+              <h3 className="text-2xl font-bold mb-4">Heb jij dit spel al eerder gespeeld?</h3>
+              <p className="text-gray-600 mb-8">
+                Als je dit spel al in een vorige les hebt voltooid en de code hebt opgeschreven, kun je dit spel overslaan.
+                Je krijgt dan een vraagteken in de virusmeter en kunt de eindcode invullen als je alle puzzels hebt afgerond.
+              </p>
+              <div className="flex gap-4 justify-center">
+                <button
+                  onClick={() => {
+                    playSound('click');
+                    setSkipConfirmGame(null);
+                  }}
+                  className="px-8 py-4 rounded-xl font-bold bg-gray-200 text-gray-700 hover:bg-gray-300 transition-all"
+                >
+                  Nee, ik wil spelen
+                </button>
+                <button
+                  onClick={() => {
+                    if (skipConfirmGame) {
+                      playSound('success');
+                      onGameSkip(skipConfirmGame);
+                      setSkipConfirmGame(null);
+                    }
+                  }}
+                  className="px-8 py-4 rounded-xl font-bold bg-[#FFC800] text-[#20126E] hover:bg-[#e6b400] transition-all"
+                >
+                  Ja, overslaan
+                </button>
+              </div>
             </div>
           </Modal>
         )}

@@ -1,5 +1,6 @@
 export interface Progress {
   completedGames: { [key: number]: boolean };
+  skippedGames: { [key: number]: boolean };
   attempts: { [key: number]: number };
   startTime: number;
 }

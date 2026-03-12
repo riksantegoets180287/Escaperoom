@@ -59,6 +59,7 @@ export default function App() {
     if (confirm('Weet je zeker dat je opnieuw wilt beginnen? Je voortgang gaat verloren.')) {
       const resetProgress: Progress = {
         completedGames: {},
+        skippedGames: {},
         attempts: {},
         startTime: Date.now()
       };
@@ -71,6 +72,15 @@ export default function App() {
     const newProgress = {
       ...progress,
       completedGames: { ...progress.completedGames, [gameId]: true }
+    };
+    setProgress(newProgress);
+    saveProgress(newProgress);
+  };
+
+  const handleGameSkip = (gameId: number) => {
+    const newProgress = {
+      ...progress,
+      skippedGames: { ...progress.skippedGames, [gameId]: true }
     };
     setProgress(newProgress);
     saveProgress(newProgress);
@@ -106,11 +116,12 @@ export default function App() {
   }
 
   return (
-    <EscapeRoom 
-      user={user} 
-      progress={progress} 
+    <EscapeRoom
+      user={user}
+      progress={progress}
       config={adminConfig}
       onGameComplete={handleGameComplete}
+      onGameSkip={handleGameSkip}
       onReset={handleReset}
       onLogout={() => {
         sessionStorage.removeItem('virusvrij_user');

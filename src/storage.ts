@@ -10,6 +10,7 @@ export function getProgress(): Progress {
   }
   return {
     completedGames: {},
+    skippedGames: {},
     attempts: {},
     startTime: Date.now()
   };
