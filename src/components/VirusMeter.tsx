@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Grid3x3, Keyboard, Mail, Search, KeyRound, HelpCircle } from 'lucide-react';
+import { Grid3x3, Keyboard, Mail, Search, KeyRound, Circle as HelpCircle } from 'lucide-react';
 
 interface VirusMeterProps {
   completedCount: number;

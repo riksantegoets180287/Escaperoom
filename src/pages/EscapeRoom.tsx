@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { LogOut, RefreshCw, Trophy, Download, HelpCircle } from 'lucide-react';
+import { LogOut, RefreshCw, Trophy, Download, Circle as HelpCircle } from 'lucide-react';
 import { Progress, AdminConfig } from '../types';
 import { SuperComputer } from '../components/SuperComputer';
 import { VirusMeter } from '../components/VirusMeter';
